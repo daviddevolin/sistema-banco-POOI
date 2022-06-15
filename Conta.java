@@ -40,6 +40,7 @@ public class Conta
     public void depositar(Double valor){
          saldo+=valor;
     }
+    
     public boolean devedor (){
         if(saldo <0){
             return true;
@@ -50,6 +51,11 @@ public class Conta
     public void manutencao (Double taxa){
         Double desconto= saldo * taxa;
         saldo -= desconto;
+    }
+    
+    public void render (Double taxa){
+        Double rendimento= saldo * taxa;
+        saldo += rendimento;
     }
 
     public String getCod() {

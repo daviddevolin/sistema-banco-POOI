@@ -6,7 +6,7 @@ public class Agencia
 {
     // variáveis de instância - substitua o exemplo abaixo pelo seu próprio
     private String cod;
-    ArrayList<Conta> contas = new ArrayList();
+    ArrayList<Conta> contas = new ArrayList<Conta>();
     
     /**
      * Construtor para objetos da classe Agencia
@@ -45,12 +45,9 @@ public class Agencia
      
     
     public Conta pesquisarConta(String cod){
-        for(Conta c : contas){
-            if(c.getCod().compareTo(cod)==0){
-                return c;
-            }
-        }
-        return null;
+        Conta conta;
+        conta = (contas.stream().filter(c->c.getCod() == cod).findFirst().get());
+        return conta;
     }
     
     public List<Conta> devedores (){
@@ -64,6 +61,14 @@ public class Agencia
         conta.depositar(valor);  
     }
     
+    public void render ( Double taxa){
+        contas.stream().filter(c->c.getTipo().equals("poupança")).forEach(c->c.render(taxa)); 
+    }
+
+    public void manutencao ( Double taxa){
+        contas.stream().filter(c->c.getTipo().equals("corrente")).forEach(c->c.manutencao(taxa)); 
+    }
+
     public String getCod() {
         return cod;
     }

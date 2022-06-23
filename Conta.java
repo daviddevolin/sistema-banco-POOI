@@ -42,10 +42,10 @@ public class Conta
      
     
     public boolean depositar(Double valor){
-        Double saldoant = saldo;
+        Double saldoAnt = saldo;
         movimentacoes.add("Data: " + LocalDateTime.now() + " - Depósito: R$" + valor + " Saldo: R$" + saldo);
         saldo+=valor;
-        if(saldoant != saldo){
+        if(saldoAnt != saldo){
             return true;
         }
         return false;

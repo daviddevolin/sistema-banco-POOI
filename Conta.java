@@ -25,7 +25,9 @@ public class Conta
         
         if(valSaque <= (saldo+limite)){
            saldo= saldo- valSaque;
+           movimentacoes.add("Data: " + LocalDateTime.now() + " - Saque: -R$" + valSaque + " Saldo: R$" + saldo);
            return true;
+
         }
         return false;
         
@@ -34,7 +36,9 @@ public class Conta
     public boolean transferir (Double valor, Conta destino){
         boolean result = sacar(valor);
         if(result){
-            destino.depositar(valor);
+            destino.saldo+=valor;
+            movimentacoes.add("Data: " + LocalDateTime.now() + " - Transferência Enviada: -R$" + valor + " Saldo: R$" + saldo);
+            destino.movimentacoes.add("Data: " + LocalDateTime.now() + " - Transferência Recebida: +R$" + valor + " Saldo: " + saldo);
             return true;
         }   
         return false;
@@ -43,9 +47,9 @@ public class Conta
     
     public boolean depositar(Double valor){
         Double saldoAnt = saldo;
-        movimentacoes.add("Data: " + LocalDateTime.now() + " - Depósito: R$" + valor + " Saldo: R$" + saldo);
         saldo+=valor;
         if(saldoAnt != saldo){
+            movimentacoes.add("Data: " + LocalDateTime.now() + " - Depósito: R$" + valor + " Saldo: R$" + saldo);
             return true;
         }
         return false;
@@ -61,11 +65,14 @@ public class Conta
     public void manutencao (Double taxa){
         Double desconto= saldo * taxa;
         saldo -= desconto;
+        movimentacoes.add("Data: " + LocalDateTime.now() + " - Taxa de Manutenção: -R$" + taxa + " Saldo: R$" + saldo);
+
     }
     
     public void render (Double taxa){
         Double rendimento= saldo * taxa;
         saldo += rendimento;
+        movimentacoes.add("Data: " + LocalDateTime.now() + " - Rendimento: +R$" + taxa + " Saldo: R$" + saldo);
     }
 
     public String getCod() {
@@ -98,5 +105,13 @@ public class Conta
 
     public void setLimite(Double limite) {
         this.limite = limite;
+    }
+
+    public List<String> getMovimentacoes() {
+        return movimentacoes;
+    }
+
+    public void setMovimentacoes(List<String> movimentacoes) {
+        this.movimentacoes = movimentacoes;
     }
 }

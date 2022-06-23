@@ -68,6 +68,11 @@ public class Agencia
     public void manutencao ( Double taxa){
         contas.stream().filter(c->c.getTipo().equals("corrente")).forEach(c->c.manutencao(taxa)); 
     }
+    public List<String> getExtrato(String cod){
+        Conta conta;
+        conta = (contas.stream().filter(c->c.getCod() == cod).findFirst().get());
+        return conta.getMovimentacoes();
+    }
 
     public String getCod() {
         return cod;
@@ -84,4 +89,6 @@ public class Agencia
     public void setContas(ArrayList<Conta> contas) {
         this.contas = contas;
     }
+
+
 }

@@ -1,3 +1,6 @@
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Conta
 {
@@ -6,6 +9,7 @@ public class Conta
     private String tipo;
     private Double saldo;
     private Double limite;
+    private List<String> movimentacoes = new ArrayList<>();
     public Conta(String cod, String tipo, Double saldo, Double limite) {
         this.cod = cod;
         this.tipo = tipo;
@@ -37,8 +41,14 @@ public class Conta
     }
      
     
-    public void depositar(Double valor){
-         saldo+=valor;
+    public boolean depositar(Double valor){
+        Double saldoant = saldo;
+        movimentacoes.add("Data: " + LocalDateTime.now() + " - Depósito: R$" + valor + " Saldo: R$" + saldo);
+        saldo+=valor;
+        if(saldoant != saldo){
+            return true;
+        }
+        return false;
     }
     
     public boolean devedor (){
